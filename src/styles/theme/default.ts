@@ -1,26 +1,30 @@
 import { themeCommons } from "./commons";
 
+type lightMode = "light";
+type darkMode = "dark";
+
 export const defaultTheme = {
+  mode: "" as lightMode | darkMode,
   colors: {
     primary: {
-      base: "#00875F",
-      light: "#00B37E",
-      dark: "#015F43",
+      base: "" as string,
+      light: "" as string,
+      dark: "" as string,
     },
     secondary: {
-      base: "#F03847",
-      light: "#f56772",
-      dark: "#c93844",
+      base: "" as string,
+      light: "" as string,
+      dark: "" as string,
     },
     base: {
-      background: "#121214",
-      element: "#202024",
-      divider: "#323238",
-      placeholder: "#7C7C8A",
-      label: "#8D8D99",
-      text: "#C4C4CC",
-      title: "#E1E1E6",
-      contrast: "#FFFFFF",
+      background: "" as string,
+      element: "" as string,
+      divider: "" as string,
+      placeholder: "" as string,
+      label: "" as string,
+      text: "" as string,
+      title: "" as string,
+      contrast: "" as string,
     },
   },
   commons: themeCommons,

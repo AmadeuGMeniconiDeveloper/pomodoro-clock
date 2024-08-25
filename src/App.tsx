@@ -1,20 +1,12 @@
 import { ThemeProvider } from "styled-components";
-import { defaultTheme } from "./styles/theme/default";
-import { Button } from "./components/Button";
 import { GlobalStyles } from "./styles/global.styled";
+import { darkTheme } from "./styles/theme/dark";
+// import { lightTheme } from "./styles/theme/light";
 
 export function App() {
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
-      <Button variant="primary">Hello</Button>
-      <Button variant="primary" disabled>
-        Hello
-      </Button>
-      <Button variant="secondary">Hello</Button>
-      <Button variant="secondary" disabled>
-        Hello
-      </Button>
     </ThemeProvider>
   );
 }
