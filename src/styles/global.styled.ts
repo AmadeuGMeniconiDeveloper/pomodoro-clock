@@ -14,7 +14,8 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     background-color: ${props => props.theme.colors.base.background};
-    color: ${props => props.theme.colors.base.text};
+
+    -webkit-font-smoothing: antialiased;
   }
 
   body, input, button, textarea {
@@ -22,5 +23,6 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: ${props => props.theme.commons.font.weight.regular};
     font-size: ${props => props.theme.commons.font.size.md};
     line-height: ${props => props.theme.commons.font.lineHeight.default};
+    color: ${props => props.theme.colors.base.text};
   }
 `;
