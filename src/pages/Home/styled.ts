@@ -15,7 +15,7 @@ export const FormContainer = styled.form`
   align-items: center;
   gap: ${props => props.theme.commons.spacing.xxl};
 
-  color: ${props => props.theme.colors.base.text};
+  color: ${props => props.theme.colors.base.grey_700};
   font-size: ${props => props.theme.commons.font.size.lg};
   font-weight: ${props => props.theme.commons.font.weight.bold};
 
@@ -33,7 +33,7 @@ const BaseInput = styled.input`
   margin-inline: ${props => props.theme.commons.spacing.md};
   padding: 0 0.5rem;
   border: none;
-  border-bottom: 2px solid ${props => props.theme.colors.base.placeholder};
+  border-bottom: 2px solid ${props => props.theme.colors.base.gray_500};
 
   background: transparent;
 
@@ -42,7 +42,7 @@ const BaseInput = styled.input`
   line-height: 100%;
 
   &::placeholder {
-    color: ${props => props.theme.colors.base.placeholder};
+    color: ${props => props.theme.colors.base.gray_500};
   }
 
   &:focus {
@@ -72,7 +72,7 @@ export const ClockContainer = styled.div`
   & > span {
     padding: 1rem;
     border-radius: ${props => props.theme.commons.radius.md};
-    background-color: ${props => props.theme.colors.base.divider};
+    background-color: ${props => props.theme.colors.base.gray_400};
 
     font-family: ${props => props.theme.commons.font.family.mono};
     font-size: ${props => props.theme.commons.font.size.huge};

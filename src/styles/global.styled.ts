@@ -7,13 +7,15 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+
+
   :focus {
     outline: 0;
     box-shadow: 0 0 0 2px ${props => props.theme.colors.primary.base};
   }
 
   body {
-    background-color: ${props => props.theme.colors.base.background};
+    background-color: ${props => props.theme.colors.base.gray_100};
 
     -webkit-font-smoothing: antialiased;
   }
@@ -23,6 +25,6 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: ${props => props.theme.commons.font.weight.regular};
     font-size: ${props => props.theme.commons.font.size.md};
     line-height: ${props => props.theme.commons.font.lineHeight.default};
-    color: ${props => props.theme.colors.base.text};
+    color: ${props => props.theme.colors.base.grey_700};
   }
 `;

@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 import { Play } from "@phosphor-icons/react";
+
 import {
   ClockContainer,
   Separator,
@@ -10,6 +13,8 @@ import {
 } from "./styled";
 
 export function Home() {
+  const [task, setTask] = useState("");
+
   return (
     <HomeContainer>
       <FormContainer action="" method="post">
@@ -18,8 +23,10 @@ export function Home() {
           <TaskInput
             id="task"
             type="text"
-            placeholder="Give a title to your task or project"
             list="task-suggestions"
+            placeholder="Give a title to your task or project"
+            value={task}
+            onChange={e => setTask(e.target.value)}
           />
 
           <datalist id="task-suggestions">
@@ -47,7 +54,7 @@ export function Home() {
           <span>0</span>
         </ClockContainer>
 
-        <StartCoundownButton type="submit">
+        <StartCoundownButton type="submit" disabled={!task}>
           <Play size={24} />
           Start
         </StartCoundownButton>

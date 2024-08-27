@@ -4,6 +4,11 @@ import { themeCommons } from "./commons";
 export const lightTheme: DefaultTheme = {
   mode: "light",
   colors: {
+    tints: {
+      yellow: "#e3d64b",
+      green: "#00B37E",
+      red: "#f56772",
+    },
     primary: {
       base: "#00875F",
       light: "#00B37E",
@@ -15,13 +20,14 @@ export const lightTheme: DefaultTheme = {
       dark: "#c93844",
     },
     base: {
-      background: "#FFFFFF",
-      element: "#E1E1E6",
-      divider: "#C4C4CC",
-      placeholder: "#8D8D99",
-      label: "#7C7C8A",
-      text: "#323238",
-      title: "#202024",
+      gray_100: "#FFFFFF",
+      gray_200: "#E1E1E6",
+      gray_300: "#C4C4CC",
+      gray_400: "#A4A4AC",
+      gray_500: "#8D8D99",
+      gray_600: "#7C7C8A",
+      grey_700: "#323238",
+      grey_800: "#202024",
       contrast: "#121214",
     },
   },

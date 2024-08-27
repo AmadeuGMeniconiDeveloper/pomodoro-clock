@@ -6,6 +6,11 @@ type darkMode = "dark";
 export const defaultTheme = {
   mode: "" as lightMode | darkMode,
   colors: {
+    tints: {
+      yellow: "" as string,
+      green: "" as string,
+      red: "" as string,
+    },
     primary: {
       base: "" as string,
       light: "" as string,
@@ -17,13 +22,14 @@ export const defaultTheme = {
       dark: "" as string,
     },
     base: {
-      background: "" as string,
-      element: "" as string,
-      divider: "" as string,
-      placeholder: "" as string,
-      label: "" as string,
-      text: "" as string,
-      title: "" as string,
+      gray_100: "" as string,
+      gray_200: "" as string,
+      gray_300: "" as string,
+      gray_400: "" as string,
+      gray_500: "" as string,
+      gray_600: "" as string,
+      grey_700: "" as string,
+      grey_800: "" as string,
       contrast: "" as string,
     },
   },

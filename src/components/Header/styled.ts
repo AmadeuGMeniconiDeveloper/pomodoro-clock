@@ -17,7 +17,7 @@ export const HeaderContainer = styled.header`
       justify-content: center;
       align-items: center;
 
-      color: ${props => props.theme.colors.base.text};
+      color: ${props => props.theme.colors.base.grey_700};
 
       &:hover {
         border-top: 3px solid transparent;
