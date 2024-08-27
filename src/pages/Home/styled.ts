@@ -94,7 +94,7 @@ export const Separator = styled.div`
   font-weight: ${props => props.theme.commons.font.weight.bold};
 `;
 
-export const StartCoundownButton = styled.button`
+const BaseCountdownButton = styled.button`
   width: 100%;
 
   display: flex;
@@ -107,25 +107,38 @@ export const StartCoundownButton = styled.button`
   padding: 1rem;
   border-radius: ${props => props.theme.commons.radius.sm};
 
-  background-color: ${props => props.theme.colors.primary.base};
-
   color: ${props => props.theme.colors.base.contrast};
   font-weight: ${props => props.theme.commons.font.weight.bold};
 
   cursor: pointer;
 
-  &:hover {
+  &:disabled {
+    filter: brightness(0.5);
+
+    cursor: not-allowed;
+  }
+`;
+
+export const StartCountdownButton = styled(BaseCountdownButton)`
+  background-color: ${props => props.theme.colors.primary.base};
+
+  &:not(:disabled):hover {
     background-color: ${props => props.theme.colors.primary.light};
   }
 
-  &:active {
+  &:not(:disabled):active {
     background-color: ${props => props.theme.colors.primary.dark};
   }
+`;
 
-  &:disabled {
-    background-color: ${props => props.theme.colors.primary.base};
-    opacity: 0.5;
+export const PauseCountdownButton = styled(BaseCountdownButton)`
+  background-color: ${props => props.theme.colors.secondary.base};
 
-    cursor: not-allowed;
+  &:not(:disabled):hover {
+    background-color: ${props => props.theme.colors.secondary.light};
+  }
+
+  &:not(:disabled):active {
+    background-color: ${props => props.theme.colors.secondary.dark};
   }
 `;
