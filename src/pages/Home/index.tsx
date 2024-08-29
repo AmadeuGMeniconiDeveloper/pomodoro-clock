@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useContext } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import * as zod from "zod";
-import { differenceInSeconds } from "date-fns";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Pause, Play } from "@phosphor-icons/react";
+import { TasksContext } from "../../contexts/TasksContext";
+
+import { NewTaskFormFields } from "./components/NewTaskFormFields";
+import { Countdown } from "./components/Countdown";
 
 import {
-  ClockContainer,
-  Separator,
-  FormContainer,
   HomeContainer,
-  TaskInput,
-  MinutesInput,
   PauseCountdownButton,
   StartCountdownButton,
 } from "./styled";
+
+import { Pause, Play } from "@phosphor-icons/react";
 
 const newTaskFormValidationSchema = zod.object({
   title: zod.string().min(1, "Title is required"),
@@ -27,21 +26,11 @@ const newTaskFormValidationSchema = zod.object({
 
 type NewTaskFormData = zod.infer<typeof newTaskFormValidationSchema>;
 
-interface Task {
-  id: string;
-  title: string;
-  minutes: number;
-  startDate: Date;
-  pausedDate?: Date;
-  finishedDate?: Date;
-}
-
 export function Home() {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [activeTaskId, setActiveTasks] = useState<Task["id"] | null>(null);
-  const [timePassedInSeconds, setTimePassedInSeconds] = useState(0);
+  const { activeTask, pauseActiveTask, createNewTask } =
+    useContext(TasksContext);
 
-  const { register, handleSubmit, watch, reset } = useForm<NewTaskFormData>({
+  const newTaskForm = useForm<NewTaskFormData>({
     resolver: zodResolver(newTaskFormValidationSchema),
     defaultValues: {
       title: undefined,
@@ -49,91 +38,12 @@ export function Home() {
     },
   });
 
-  const activeTask = tasks.find(task => task.id === activeTaskId);
-
-  const totalSeconds = activeTask ? activeTask.minutes * 60 : 0;
-
-  useEffect(() => {
-    let interval: number;
-
-    if (activeTask) {
-      interval = setInterval(() => {
-        const secondsPassed = differenceInSeconds(
-          new Date(),
-          activeTask.startDate
-        );
-
-        if (secondsPassed >= totalSeconds) {
-          setTasks(previousTasks =>
-            previousTasks.map(task => {
-              if (task.id === activeTaskId) {
-                return {
-                  ...task,
-                  finishedDate: new Date(),
-                };
-              } else {
-                return task;
-              }
-            })
-          );
-
-          setTimePassedInSeconds(totalSeconds);
-          clearInterval(interval);
-        } else {
-          setTimePassedInSeconds(secondsPassed);
-        }
-      }, 1000);
-    }
-
-    return () => clearInterval(interval);
-  }, [activeTask, totalSeconds, tasks, activeTaskId]);
+  const { handleSubmit, watch, reset } = newTaskForm;
 
   function handleCreateNewTask(data: NewTaskFormData) {
-    const taskId = String(new Date().getTime());
-    const newTask: Task = {
-      id: taskId,
-      title: data.title,
-      minutes: data.minutes,
-      startDate: new Date(),
-    };
-
-    setTimePassedInSeconds(0);
-    setTasks(previousTasks => [...previousTasks, newTask]);
-    setActiveTasks(taskId);
-
+    createNewTask(data);
     reset();
   }
-
-  function handlePauseTask() {
-    setTasks(previousTasks =>
-      previousTasks.map(task => {
-        if (task.id === activeTaskId) {
-          return {
-            ...task,
-            pausedDate: new Date(),
-          };
-        } else {
-          return task;
-        }
-      })
-    );
-
-    setActiveTasks(null);
-  }
-
-  const currentSeconds = activeTask ? totalSeconds - timePassedInSeconds : 0;
-
-  const minutesAmount = Math.floor(currentSeconds / 60);
-  const secondsAmount = currentSeconds % 60;
-
-  const timerMinutes = String(minutesAmount).padStart(2, "0");
-  const timerSeconds = String(secondsAmount).padStart(2, "0");
-
-  useEffect(() => {
-    if (activeTask) {
-      document.title = `${timerMinutes}:${timerSeconds}`;
-    }
-  }, [timerMinutes, timerSeconds, activeTask]);
 
   const titleField = watch("title");
   const minutesField = watch("minutes");
@@ -142,46 +52,14 @@ export function Home() {
 
   return (
     <HomeContainer>
-      <FormContainer action="" onSubmit={handleSubmit(handleCreateNewTask)}>
-        <div>
-          <label htmlFor="title">I'll work on</label>
-          <TaskInput
-            id="title"
-            type="text"
-            list="title-suggestions"
-            placeholder="Give a title to your task or project"
-            disabled={!!activeTask}
-            {...register("title")}
-          />
-          <datalist id="title-suggestions">
-            <option value="Task 1" />
-          </datalist>
-
-          <label htmlFor="minutes">for</label>
-          <MinutesInput
-            id="minutes"
-            type="number"
-            placeholder="00"
-            step={5}
-            min={1}
-            max={60}
-            disabled={!!activeTask}
-            {...register("minutes", { valueAsNumber: true })}
-          />
-
-          <span>minutes.</span>
-        </div>
-
-        <ClockContainer>
-          <span>{timerMinutes[0]}</span>
-          <span>{timerMinutes[1]}</span>
-          <Separator>:</Separator>
-          <span>{timerSeconds[0]}</span>
-          <span>{timerSeconds[1]}</span>
-        </ClockContainer>
+      <form action="" onSubmit={handleSubmit(handleCreateNewTask)}>
+        <FormProvider {...newTaskForm}>
+          <NewTaskFormFields />
+        </FormProvider>
+        <Countdown />
 
         {activeTask ? (
-          <PauseCountdownButton type="button" onClick={handlePauseTask}>
+          <PauseCountdownButton type="button" onClick={pauseActiveTask}>
             <Pause size={24} />
             Pause
           </PauseCountdownButton>
@@ -191,7 +69,7 @@ export function Home() {
             Start
           </StartCountdownButton>
         )}
-      </FormContainer>
+      </form>
     </HomeContainer>
   );
 }

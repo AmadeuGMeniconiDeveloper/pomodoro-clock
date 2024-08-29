@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface StatusProps {
+  color: "yellow" | "green" | "red";
+}
+
 export const HistoryContainer = styled.main`
   height: 100%;
 
@@ -74,10 +78,6 @@ export const HistoryListContainer = styled.div`
   }
 `;
 
-interface StatusProps {
-  statusColor: "yellow" | "green" | "red";
-}
-
 export const Status = styled.span<StatusProps>`
   display: flex;
   align-items: center;
@@ -88,6 +88,6 @@ export const Status = styled.span<StatusProps>`
     width: 0.5rem;
     height: 0.5rem;
     border-radius: ${props => props.theme.commons.radius.full};
-    background-color: ${props => props.theme.colors.tints[props.statusColor]};
+    background-color: ${props => props.theme.colors.tints[props.color]};
   }
 `;
