@@ -1,3 +1,2 @@
-# pomodoro-clock
+# Code along da Rocketseat: "Ignite Timer"
 
-Code along da Rocketseat: "Ignite Timer"
